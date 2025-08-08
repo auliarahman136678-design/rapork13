@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapor K13 SD - Revisi 2019</title>
+    <title>Aplikasi Rapor K13 SD Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary: #2c5282;
+            --secondary: #4299e1;
+            --success: #38a169;
+            --danger: #e53e3e;
+            --warning: #d69e2e;
+            --light: #f7fafc;
+            --dark: #1a202c;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: #f5f7fa;
+            color: var(--dark);
             line-height: 1.6;
         }
 
@@ -24,44 +35,72 @@
             padding: 20px;
         }
 
+        /* Header Styles */
         .header {
             text-align: center;
-            color: white;
             margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 2.2rem;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
+        /* Card Styles */
         .card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 10px;
+            padding: 0;
             margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card-header {
+            padding: 18px 25px;
+            background: var(--light);
+            border-bottom: 1px solid #e2e8f0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-header .toggle-icon {
             transition: transform 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-2px);
+        .card-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
         }
 
-        .card h2 {
-            color: #4a5568;
-            margin-bottom: 20px;
-            font-size: 1.5em;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
+        .card-body {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
         }
 
+        .card-body.show {
+            padding: 25px;
+            max-height: 2000px;
+        }
+
+        /* Form Styles */
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -77,142 +116,155 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #2d3748;
+            color: var(--dark);
         }
 
-        .form-group input, .form-group select, .form-group textarea {
+        .form-control {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
+            padding: 12px 15px;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
+            font-size: 15px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+        .form-control:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
         }
 
+        /* Button Styles */
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
-            margin: 5px;
-            display: inline-block;
+            border: none;
             text-decoration: none;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
-        .btn:hover {
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2a4365;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            background: var(--success);
+            color: white;
         }
 
-        .btn-small {
-            padding: 8px 15px;
+        .btn-success:hover {
+            background: #2f855a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
             font-size: 14px;
         }
 
-        .subject-list {
-            margin-top: 20px;
+        /* Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .subject-item {
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
         }
 
-        .subject-item:hover {
-            border-color: #667eea;
-            background: #edf2f7;
-        }
-
-        .subject-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .subject-name {
-            font-weight: 700;
-            color: #2d3748;
-            font-size: 1.1em;
-            flex: 1;
-        }
-
-        .subject-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .nilai-inputs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .nilai-group {
+        .table th, .table td {
+            padding: 12px 15px;
             text-align: center;
+            border: 1px solid #e2e8f0;
         }
 
-        .nilai-group input {
-            text-align: center;
+        .table th {
+            background: var(--primary);
+            color: white;
             font-weight: 600;
         }
 
-        .predikat-display {
-            margin-top: 5px;
-            padding: 5px;
-            border-radius: 5px;
+        .table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .table tr:hover {
+            background: #ebf8ff;
+        }
+
+        /* Predikat Styles */
+        .predikat {
             font-weight: bold;
-            text-align: center;
-            min-height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: white;
+            display: inline-block;
+            min-width: 30px;
         }
 
-        .predikat-A { background: #c6f6d5; color: #22543d; }
-        .predikat-B { background: #bee3f8; color: #2a4365; }
-        .predikat-C { background: #faf089; color: #744210; }
-        .predikat-D { background: #fed7d7; color: #742a2a; }
+        .predikat-A { background: var(--success); }
+        .predikat-B { background: var(--secondary); }
+        .predikat-C { background: var(--warning); color: #fff; }
+        .predikat-D { background: var(--danger); }
 
-        .deskripsi-section {
-            margin-top: 15px;
+        /* Status Tuntas */
+        .tuntas { background: #f0fff4; }
+        .tidak-tuntas { background: #fff5f5; }
+
+        /* Rata-rata */
+        .rata-rata {
+            font-weight: bold;
+            background: #ebf8ff;
         }
 
-        .deskripsi-section textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -224,20 +276,18 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-        }
-
-        .modal.show {
-            display: flex;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         .modal-content {
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 500px;
+            padding: 25px;
+            border-radius: 10px;
             width: 90%;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
         .modal-header {
@@ -245,262 +295,101 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-        }
-
-        .close {
-            font-size: 30px;
-            cursor: pointer;
-            color: #a0aec0;
-            line-height: 1;
-        }
-
-        .close:hover {
-            color: #2d3748;
-        }
-
-        .rapor-preview {
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            margin-top: 30px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-            display: none;
-        }
-
-        .rapor-preview.show {
-            display: block;
-        }
-
-        .rapor-header {
-            text-align: center;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .rapor-header h1 {
-            color: #2d3748;
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .student-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .info-section {
-            background: #f7fafc;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .info-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
+            padding-bottom: 15px;
             border-bottom: 1px solid #e2e8f0;
         }
 
-        .info-item:last-child {
-            border-bottom: none;
+        .modal-header h3 {
+            color: var(--primary);
+            margin: 0;
         }
 
-        .info-label {
-            font-weight: 600;
-            color: #4a5568;
-        }
-
-        .info-value {
-            color: #2d3748;
-            font-weight: 500;
-        }
-
-        .nilai-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .nilai-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 10px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .nilai-table td {
-            padding: 12px 10px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        .nilai-table td:nth-child(2) {
-            text-align: left;
-            padding-left: 20px;
-        }
-
-        .nilai-table tr:nth-child(even) {
-            background: #f7fafc;
-        }
-
-        .predikat-cell {
-            font-weight: bold;
-            padding: 8px 12px;
-            border-radius: 20px;
-            color: white;
-            display: inline-block;
-            min-width: 30px;
-        }
-
-        .predikat-cell.A { background: #38a169; }
-        .predikat-cell.B { background: #3182ce; }
-        .predikat-cell.C { background: #d69e2e; }
-        .predikat-cell.D { background: #e53e3e; }
-
-        .deskripsi-kompetensi {
-            margin-top: 30px;
-        }
-
-        .deskripsi-item {
-            background: #f7fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .deskripsi-title {
-            color: #4a5568;
-            font-weight: 700;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .deskripsi-text {
-            margin-bottom: 10px;
-            text-align: justify;
-            line-height: 1.6;
-        }
-
-        .alert {
-            background: #fed7d7;
-            color: #742a2a;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #feb2b2;
-        }
-
-        .success {
-            background: #c6f6d5;
-            color: #22543d;
-            border-color: #9ae6b4;
-        }
-
-        .ekstrakurikuler-list {
+        .modal-footer {
             margin-top: 20px;
-        }
-
-        .ekstrakurikuler-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #e2e8f0;
+            justify-content: flex-end;
+            gap: 10px;
         }
 
-        .sikap-section {
-            margin-top: 30px;
-        }
-
-        .sikap-item {
-            margin-bottom: 20px;
-        }
-
-        .catatan-wali {
-            margin-top: 30px;
-        }
-
-        .footer-rapor {
+        /* TTD Styles */
+        .ttd-section {
             margin-top: 40px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
         }
 
-        .ttd-section {
+        .ttd-box {
             text-align: center;
-            margin-top: 50px;
         }
 
         .ttd-space {
             height: 80px;
             margin: 20px 0;
-            border-bottom: 1px solid #2d3748;
+            border-bottom: 1px solid var(--dark);
         }
 
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .subject-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .subject-actions {
-                justify-content: center;
-            }
-            
-            .nilai-inputs {
+            .form-row {
                 grid-template-columns: 1fr;
             }
-
-            .rapor-preview {
-                padding: 20px;
-            }
-
-            .student-info-grid {
+            
+            .ttd-section {
                 grid-template-columns: 1fr;
             }
-
-            .footer-rapor {
-                grid-template-columns: 1fr;
+            
+            .btn {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
             }
         }
 
         @media print {
-            body {
-                background: white;
-                color: black;
+            body * {
+                visibility: hidden;
             }
-            
-            .container > .card, .btn {
-                display: none;
+            #raporPreview, #raporPreview * {
+                visibility: visible;
             }
-            
-            .rapor-preview {
-                box-shadow: none;
+            #raporPreview {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 0;
                 margin: 0;
-                padding: 20px;
+                box-shadow: none;
+                background: white;
             }
-
             .no-print {
                 display: none;
+            }
+            .card-header {
+                background: white !important;
+            }
+            .card-body {
+                max-height: none !important;
+                padding: 20px !important;
+                display: block !important;
             }
         }
     </style>
@@ -508,736 +397,827 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Rapor K13 SD</h1>
+            <h1><i class="fas fa-book-open"></i> APLIKASI RAPOR K13 SD</h1>
             <p>Kurikulum 2013 Revisi 2019 - Sekolah Dasar</p>
+        </div>
+
+        <!-- Data Sekolah -->
+        <div class="card">
+            <div class="card-header collapsed" onclick="toggleCard(this)">
+                <h2><i class="fas fa-school"></i> Data Sekolah</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="namaSekolah">Nama Sekolah</label>
+                        <input type="text" id="namaSekolah" class="form-control" value="SDN 01 Contoh">
+                    </div>
+                    <div class="form-group">
+                        <label for="npsn">NPSN</label>
+                        <input type="text" id="npsn" class="form-control" value="12345678">
+                    </div>
+                    <div class="form-group">
+                        <label for="alamatSekolah">Alamat Sekolah</label>
+                        <input type="text" id="alamatSekolah" class="form-control" value="Jl. Pendidikan No. 1, Kota Contoh">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="namaKepalaSekolah">Nama Kepala Sekolah</label>
+                        <input type="text" id="namaKepalaSekolah" class="form-control" value="Dr. Ahmad Fauzi, M.Pd.">
+                    </div>
+                    <div class="form-group">
+                        <label for="nipKepalaSekolah">NIP Kepala Sekolah</label>
+                        <input type="text" id="nipKepalaSekolah" class="form-control" value="19651231 199203 1 001">
+                    </div>
+                    <div class="form-group">
+                        <label for="kkmSekolah">KKM Sekolah</label>
+                        <input type="number" id="kkmSekolah" class="form-control" value="75" min="0" max="100">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Data Siswa -->
         <div class="card">
-            <h2>📝 Data Siswa</h2>
-            <div class="form-group">
-                <label for="namaSekolah">Nama Sekolah:</label>
-                <input type="text" id="namaSekolah" placeholder="Masukkan nama sekolah" value="SDN 01 Contoh">
+            <div class="card-header collapsed" onclick="toggleCard(this)">
+                <h2><i class="fas fa-user-graduate"></i> Data Siswa</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
             </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="namaSiswa">Nama Siswa:</label>
-                    <input type="text" id="namaSiswa" placeholder="Masukkan nama siswa" value="Ananda Putri">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="namaSiswa">Nama Siswa</label>
+                        <input type="text" id="namaSiswa" class="form-control" value="Ananda Putri">
+                    </div>
+                    <div class="form-group">
+                        <label for="nis">NIS</label>
+                        <input type="text" id="nis" class="form-control" value="12345">
+                    </div>
+                    <div class="form-group">
+                        <label for="nisn">NISN</label>
+                        <input type="text" id="nisn" class="form-control" value="9876543210">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="nis">NIS:</label>
-                    <input type="text" id="nis" placeholder="Masukkan NIS" value="12345">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="kelas">Kelas</label>
+                        <select id="kelas" class="form-control">
+                            <option value="I">Kelas I</option>
+                            <option value="II">Kelas II</option>
+                            <option value="III">Kelas III</option>
+                            <option value="IV">Kelas IV</option>
+                            <option value="V" selected>Kelas V</option>
+                            <option value="VI">Kelas VI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="semester">Semester</label>
+                        <select id="semester" class="form-control">
+                            <option value="1">Semester 1 (Ganjil)</option>
+                            <option value="2" selected>Semester 2 (Genap)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tahunAjaran">Tahun Ajaran</label>
+                        <input type="text" id="tahunAjaran" class="form-control" value="2024/2025">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="nisn">NISN:</label>
-                    <input type="text" id="nisn" placeholder="Masukkan NISN" value="9876543210">
-                </div>
-                <div class="form-group">
-                    <label for="kelas">Kelas:</label>
-                    <select id="kelas">
-                        <option value="">Pilih Kelas</option>
-                        <option value="I">I (Satu)</option>
-                        <option value="II">II (Dua)</option>
-                        <option value="III">III (Tiga)</option>
-                        <option value="IV">IV (Empat)</option>
-                        <option value="V" selected>V (Lima)</option>
-                        <option value="VI">VI (Enam)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="semester">Semester:</label>
-                    <select id="semester">
-                        <option value="">Pilih Semester</option>
-                        <option value="Ganjil">Ganjil</option>
-                        <option value="Genap" selected>Genap</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="tahunAjaran">Tahun Ajaran:</label>
-                    <input type="text" id="tahunAjaran" placeholder="Contoh: 2024/2025" value="2024/2025">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="namaWaliKelas">Nama Wali Kelas</label>
+                        <input type="text" id="namaWaliKelas" class="form-control" value="Dewi Sartika, S.Pd.">
+                    </div>
+                    <div class="form-group">
+                        <label for="nipWaliKelas">NIP Wali Kelas</label>
+                        <input type="text" id="nipWaliKelas" class="form-control" value="19800312 200501 2 002">
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Mata Pelajaran -->
+        <!-- Legger Nilai -->
         <div class="card">
-            <h2>📋 Mata Pelajaran & Nilai</h2>
-            <button class="btn btn-success" onclick="showTambahMapelModal()">+ Tambah Mata Pelajaran</button>
-            <div id="subjectList" class="subject-list">
-                <!-- Mata pelajaran akan ditampilkan di sini -->
+            <div class="card-header" onclick="toggleCard(this)">
+                <h2><i class="fas fa-table"></i> Legger Nilai Mata Pelajaran</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
             </div>
-        </div>
-
-        <!-- Ekstrakurikuler -->
-        <div class="card">
-            <h2>⚽ Ekstrakurikuler</h2>
-            <div class="form-group">
-                <label for="inputEkstrakurikuler">Nama Ekstrakurikuler:</label>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" id="inputEkstrakurikuler" placeholder="Masukkan nama ekstrakurikuler" style="flex: 1;">
-                    <button class="btn btn-success" onclick="tambahEkstrakurikuler()">+ Tambah</button>
+            <div class="card-body show">
+                <div class="table-responsive">
+                    <table class="table" id="leggerNilai">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">No</th>
+                                <th rowspan="2">Mata Pelajaran</th>
+                                <th rowspan="2">KKM</th>
+                                <th colspan="3">Pengetahuan</th>
+                                <th colspan="3">Keterampilan</th>
+                                <th rowspan="2">Aksi</th>
+                            </tr>
+                            <tr>
+                                <th>Nilai</th>
+                                <th>Predikat</th>
+                                <th>Status</th>
+                                <th>Nilai</th>
+                                <th>Predikat</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leggerBody">
+                            <!-- Data legger akan diisi di sini -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="rata-rata">
+                                <td colspan="3"><strong>Rata-rata Kelas</strong></td>
+                                <td id="avgP">0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td id="avgK">0</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
-            </div>
-            <div id="ekstrakurikulerList" class="ekstrakurikuler-list">
-                <!-- Daftar ekstrakurikuler akan ditampilkan di sini -->
+                <button class="btn btn-success" onclick="tambahMapel()"><i class="fas fa-plus"></i> Tambah Mata Pelajaran</button>
             </div>
         </div>
 
         <!-- Sikap -->
         <div class="card">
-            <h2>😊 Sikap</h2>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="sikapSpiritual">Deskripsi Sikap Spiritual:</label>
-                    <textarea id="sikapSpiritual" placeholder="Deskripsi sikap spiritual siswa">Ananda menunjukkan sikap spiritual yang baik, selalu berdoa sebelum dan sesudah kegiatan pembelajaran.</textarea>
-                </div>
-                <div class="form-group">
-                    <label for="sikapSosial">Deskripsi Sikap Sosial:</label>
-                    <textarea id="sikapSosial" placeholder="Deskripsi sikap sosial siswa">Ananda memiliki sikap sosial yang baik, mampu bekerja sama dengan teman dan menghargai perbedaan pendapat.</textarea>
+            <div class="card-header collapsed" onclick="toggleCard(this)">
+                <h2><i class="fas fa-heart"></i> Penilaian Sikap</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sikapSpiritual">Sikap Spiritual</label>
+                        <textarea id="sikapSpiritual" class="form-control" rows="3">Ananda menunjukkan sikap spiritual yang baik, selalu berdoa sebelum dan sesudah kegiatan pembelajaran.</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="sikapSosial">Sikap Sosial</label>
+                        <textarea id="sikapSosial" class="form-control" rows="3">Ananda memiliki sikap sosial yang baik, mampu bekerja sama dengan teman dan menghargai perbedaan pendapat.</textarea>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Catatan Wali Kelas -->
+        <!-- Ekstrakurikuler -->
         <div class="card">
-            <h2>📝 Catatan Wali Kelas</h2>
-            <div class="form-group">
-                <textarea id="catatanWali" placeholder="Masukkan catatan untuk siswa" style="min-height: 100px;">Ananda adalah siswa yang rajin dan disiplin. Terus pertahankan prestasinya dan tingkatkan kemampuan dalam bekerja sama dengan teman sekelas.</textarea>
+            <div class="card-header collapsed" onclick="toggleCard(this)">
+                <h2><i class="fas fa-futbol"></i> Kegiatan Ekstrakurikuler</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ekstra1">Ekstrakurikuler 1</label>
+                        <input type="text" id="ekstra1" class="form-control" value="Pramuka">
+                    </div>
+                    <div class="form-group">
+                        <label for="nilaiEkstra1">Nilai</label>
+                        <select id="nilaiEkstra1" class="form-control">
+                            <option value="Sangat Baik">Sangat Baik</option>
+                            <option value="Baik" selected>Baik</option>
+                            <option value="Cukup">Cukup</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ekstra2">Ekstrakurikuler 2</label>
+                        <input type="text" id="ekstra2" class="form-control" value="Seni Tari">
+                    </div>
+                    <div class="form-group">
+                        <label for="nilaiEkstra2">Nilai</label>
+                        <select id="nilaiEkstra2" class="form-control">
+                            <option value="Sangat Baik" selected>Sangat Baik</option>
+                            <option value="Baik">Baik</option>
+                            <option value="Cukup">Cukup</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Catatan -->
+        <div class="card">
+            <div class="card-header collapsed" onclick="toggleCard(this)">
+                <h2><i class="fas fa-edit"></i> Catatan</h2>
+                <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="catatanWali">Catatan Wali Kelas</label>
+                    <textarea id="catatanWali" class="form-control" rows="3">Ananda adalah siswa yang rajin dan disiplin. Terus pertahankan prestasinya dan tingkatkan kemampuan dalam bekerja sama dengan teman sekelas.</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="saran">Saran</label>
+                    <textarea id="saran" class="form-control" rows="2">Ditingkatkan lagi kedisiplinan dalam mengumpulkan tugas tepat waktu.</textarea>
+                </div>
             </div>
         </div>
 
         <!-- Tombol Aksi -->
-        <div class="card">
-            <button class="btn btn-success" onclick="generateRapor()">🎓 Generate Rapor</button>
-            <button class="btn" onclick="cetakRapor()">🖨️ Cetak/Simpan PDF</button>
-            <button class="btn btn-danger" onclick="resetData()">🗑️ Reset Semua</button>
-            <button class="btn no-print" onclick="simpanData()">💾 Simpan Data</button>
-            <button class="btn no-print" onclick="loadData()">📂 Muat Data</button>
+        <div class="card no-print">
+            <div class="card-body">
+                <button class="btn btn-success" onclick="generateRapor()"><i class="fas fa-file-alt"></i> Generate Rapor</button>
+                <button class="btn btn-primary" onclick="cetakRapor()"><i class="fas fa-print"></i> Cetak Rapor</button>
+                <button class="btn btn-secondary" onclick="simpanData()"><i class="fas fa-save"></i> Simpan Data</button>
+                <button class="btn" onclick="muatData()"><i class="fas fa-folder-open"></i> Muat Data</button>
+                <button class="btn btn-danger" onclick="resetData()"><i class="fas fa-trash-alt"></i> Reset Data</button>
+            </div>
         </div>
 
         <!-- Preview Rapor -->
-        <div id="raporPreview" class="rapor-preview">
-            <div class="rapor-header">
-                <h1>RAPOR SISWA</h1>
-                <h2 id="previewSekolah">SDN 01 Contoh</h2>
-                <p>Kurikulum 2013 Revisi 2019</p>
-            </div>
-            
-            <div class="student-info-grid">
-                <div class="info-section">
-                    <div class="info-item">
-                        <span class="info-label">Nama Siswa</span>
-                        <span class="info-value" id="previewNama">Ananda Putri</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">NIS</span>
-                        <span class="info-value" id="previewNIS">12345</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">NISN</span>
-                        <span class="info-value" id="previewNISN">9876543210</span>
-                    </div>
-                </div>
-                <div class="info-section">
-                    <div class="info-item">
-                        <span class="info-label">Kelas</span>
-                        <span class="info-value" id="previewKelas">V (Lima)</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Semester</span>
-                        <span class="info-value" id="previewSemester">Genap</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Tahun Ajaran</span>
-                        <span class="info-value" id="previewTahun">2024/2025</span>
-                    </div>
-                </div>
+        <div id="raporPreview" class="card" style="display: none;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 id="previewNamaSekolah" style="font-size: 1.8rem; color: var(--primary);">SDN 01 CONTOH</h2>
+                <h3 style="font-size: 1.4rem;">RAPOR PESERTA DIDIK SEKOLAH DASAR</h3>
+                <p style="font-size: 1.1rem;">Kurikulum 2013 Revisi 2019</p>
             </div>
 
-            <!-- Sikap -->
-            <div class="sikap-section">
-                <h3 style="color: #2d3748; margin-bottom: 20px;">😊 Sikap</h3>
-                <div class="deskripsi-item">
-                    <div class="deskripsi-title">Sikap Spiritual</div>
-                    <div class="deskripsi-text" id="previewSikapSpiritual">Ananda menunjukkan sikap spiritual yang baik, selalu berdoa sebelum dan sesudah kegiatan pembelajaran.</div>
-                </div>
-                <div class="deskripsi-item">
-                    <div class="deskripsi-title">Sikap Sosial</div>
-                    <div class="deskripsi-text" id="previewSikapSosial">Ananda memiliki sikap sosial yang baik, mampu bekerja sama dengan teman dan menghargai perbedaan pendapat.</div>
-                </div>
-            </div>
-
-            <!-- Nilai -->
-            <h3 style="color: #2d3748; margin-bottom: 20px;">🎯 Capaian Hasil Belajar</h3>
-            
-            <table class="nilai-table">
-                <thead>
-                    <tr>
-                        <th rowspan="2" style="width: 5%;">No</th>
-                        <th rowspan="2" style="width: 35%;">Mata Pelajaran</th>
-                        <th colspan="2" style="width: 30%;">Pengetahuan</th>
-                        <th colspan="2" style="width: 30%;">Keterampilan</th>
-                    </tr>
-                    <tr>
-                        <th>Nilai</th>
-                        <th>Predikat</th>
-                        <th>Nilai</th>
-                        <th>Predikat</th>
-                    </tr>
-                </thead>
-                <tbody id="nilaiTableBody">
-                    <!-- Data nilai akan diisi di sini -->
-                </tbody>
+            <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 25%; padding: 8px 0;">Nama Peserta Didik</td>
+                    <td style="width: 2%;">:</td>
+                    <td id="previewNamaSiswa" style="font-weight: 600;">Ananda Putri</td>
+                    <td style="width: 15%;">Kelas</td>
+                    <td style="width: 2%;">:</td>
+                    <td id="previewKelas">V (Lima)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0;">NIS/NISN</td>
+                    <td>:</td>
+                    <td id="previewNIS">12345 / 9876543210</td>
+                    <td>Semester</td>
+                    <td>:</td>
+                    <td id="previewSemester">2 (Genap)</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px 0;">Nama Sekolah</td>
+                    <td>:</td>
+                    <td id="previewSekolahLengkap">SDN 01 Contoh</td>
+                    <td>Tahun Ajaran</td>
+                    <td>:</td>
+                    <td id="previewTahunAjaran">2024/2025</td>
+                </tr>
             </table>
 
-            <!-- Deskripsi Kompetensi -->
-            <div id="deskripsiKompetensi" class="deskripsi-kompetensi">
-                <h3 style="color: #2d3748; margin-bottom: 20px;">📋 Deskripsi Capaian Kompetensi</h3>
-                <!-- Deskripsi akan diisi di sini -->
+            <h3 style="margin: 25px 0 15px 0; border-bottom: 2px solid var(--primary); padding-bottom: 8px; color: var(--primary);">A. SIKAP</h3>
+            <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+                <tr>
+                    <th style="width: 20%; padding: 12px; background: var(--light); text-align: left; border: 1px solid #e2e8f0;">Jenis Sikap</th>
+                    <th style="width: 80%; padding: 12px; background: var(--light); text-align: left; border: 1px solid #e2e8f0;">Deskripsi</th>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Spiritual</td>
+                    <td id="previewSikapSpiritual" style="padding: 12px; border: 1px solid #e2e8f0;">Ananda menunjukkan sikap spiritual yang baik, selalu berdoa sebelum dan sesudah kegiatan pembelajaran.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 12px; border: 1px solid #e2e8f0;">Sosial</td>
+                    <td id="previewSikapSosial" style="padding: 12px; border: 1px solid #e2e8f0;">Ananda memiliki sikap sosial yang baik, mampu bekerja sama dengan teman dan menghargai perbedaan pendapat.</td>
+                </tr>
+            </table>
+
+            <h3 style="margin: 25px 0 15px 0; border-bottom: 2px solid var(--primary); padding-bottom: 8px; color: var(--primary);">B. PENGETAHUAN DAN KETERAMPILAN</h3>
+            <div class="table-responsive">
+                <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" style="width: 5%; padding: 12px; background: var(--primary); color: white;">No</th>
+                            <th rowspan="2" style="width: 35%; padding: 12px; background: var(--primary); color: white; text-align: left;">Mata Pelajaran</th>
+                            <th rowspan="2" style="width: 8%; padding: 12px; background: var(--primary); color: white;">KKM</th>
+                            <th colspan="3" style="width: 26%; padding: 12px; background: var(--primary); color: white;">Pengetahuan</th>
+                            <th colspan="3" style="width: 26%; padding: 12px; background: var(--primary); color: white;">Keterampilan</th>
+                        </tr>
+                        <tr>
+                            <th style="padding: 12px; background: var(--primary); color: white;">Nilai</th>
+                            <th style="padding: 12px; background: var(--primary); color: white;">Predikat</th>
+                            <th style="padding: 12px; background: var(--primary); color: white;">Status</th>
+                            <th style="padding: 12px; background: var(--primary); color: white;">Nilai</th>
+                            <th style="padding: 12px; background: var(--primary); color: white;">Predikat</th>
+                            <th style="padding: 12px; background: var(--primary); color: white;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="previewNilai">
+                        <!-- Data nilai akan diisi di sini -->
+                    </tbody>
+                    <tfoot>
+                        <tr style="background: var(--light); font-weight: bold;">
+                            <td colspan="3" style="padding: 12px; text-align: right; border: 1px solid #e2e8f0;">Rata-rata Kelas</td>
+                            <td id="previewAvgP" style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">0</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">-</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">-</td>
+                            <td id="previewAvgK" style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">0</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">-</td>
+                            <td style="padding: 12px; text-align: center; border: 1px solid #e2e8f0;">-</td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
 
-            <!-- Ekstrakurikuler -->
-            <div class="ekstrakurikuler-section">
-                <h3 style="color: #2d3748; margin-bottom: 20px;">⚽ Kegiatan Ekstrakurikuler</h3>
-                <div id="previewEkstrakurikuler" class="info-section">
-                    <!-- Daftar ekstrakurikuler akan diisi di sini -->
-                </div>
+            <h3 style="margin: 25px 0 15px 0; border-bottom: 2px solid var(--primary); padding-bottom: 8px; color: var(--primary);">C. EKSTRAKURIKULER</h3>
+            <table style="width: 100%; margin-bottom: 30px; border-collapse: collapse;">
+                <tr>
+                    <th style="width: 70%; padding: 12px; background: var(--light); text-align: left; border: 1px solid #e2e8f0;">Kegiatan Ekstrakurikuler</th>
+                    <th style="width: 30%; padding: 12px; background: var(--light); text-align: left; border: 1px solid #e2e8f0;">Keterangan</th>
+                </tr>
+                <tr>
+                    <td id="previewEkstra1" style="padding: 12px; border: 1px solid #e2e8f0;">Pramuka</td>
+                    <td id="previewNilaiEkstra1" style="padding: 12px; border: 1px solid #e2e8f0;">Sangat Baik</td>
+                </tr>
+                <tr>
+                    <td id="previewEkstra2" style="padding: 12px; border: 1px solid #e2e8f0;">Seni Tari</td>
+                    <td id="previewNilaiEkstra2" style="padding: 12px; border: 1px solid #e2e8f0;">Baik</td>
+                </tr>
+            </table>
+
+            <h3 style="margin: 25px 0 15px 0; border-bottom: 2px solid var(--primary); padding-bottom: 8px; color: var(--primary);">D. CATATAN</h3>
+            <div style="margin-bottom: 30px; padding: 15px; background: var(--light); border-radius: 8px;">
+                <p id="previewCatatanWali" style="margin-bottom: 15px;">Ananda adalah siswa yang rajin dan disiplin. Terus pertahankan prestasinya dan tingkatkan kemampuan dalam bekerja sama dengan teman sekelas.</p>
+                <p id="previewSaran"><strong>Saran:</strong> Ditingkatkan lagi kedisiplinan dalam mengumpulkan tugas tepat waktu.</p>
             </div>
 
-            <!-- Catatan Wali Kelas -->
-            <div class="catatan-wali">
-                <h3 style="color: #2d3748; margin-bottom: 20px;">📝 Catatan Wali Kelas</h3>
-                <div class="deskripsi-item">
-                    <div class="deskripsi-text" id="previewCatatanWali">Ananda adalah siswa yang rajin dan disiplin. Terus pertahankan prestasinya dan tingkatkan kemampuan dalam bekerja sama dengan teman sekelas.</div>
-                </div>
-            </div>
-
-            <!-- Footer Rapor -->
-            <div class="footer-rapor">
-                <div class="ttd-section">
-                    <div>Mengetahui,</div>
-                    <div>Orang Tua/Wali</div>
+            <div class="ttd-section">
+                <div class="ttd-box">
+                    <p>Orang Tua/Wali</p>
                     <div class="ttd-space"></div>
-                    <div>(___________________)</div>
+                    <p>(___________________)</p>
                 </div>
-                <div class="ttd-section">
-                    <div id="previewTempatTanggal"></div>
-                    <div>Wali Kelas</div>
+                <div class="ttd-box">
+                    <p id="previewTempatTanggal">Bandung, 20 Juni 2024</p>
+                    <p>Wali Kelas</p>
                     <div class="ttd-space"></div>
-                    <div>(___________________)</div>
-                    <div id="previewNamaWaliKelas"></div>
+                    <p id="previewNamaWaliKelas">Dewi Sartika, S.Pd.</p>
+                    <p>NIP. 19800312 200501 2 002</p>
                 </div>
-                <div class="ttd-section">
-                    <div>&nbsp;</div>
-                    <div>Kepala Sekolah</div>
+                <div class="ttd-box">
+                    <p>&nbsp;</p>
+                    <p>Kepala Sekolah</p>
                     <div class="ttd-space"></div>
-                    <div>(___________________)</div>
-                    <div id="previewNamaKepalaSekolah"></div>
+                    <p id="previewNamaKepalaSekolah">Dr. Ahmad Fauzi, M.Pd.</p>
+                    <p>NIP. 19651231 199203 1 001</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal Tambah Mata Pelajaran -->
-    <div id="modalTambahMapel" class="modal">
+    <!-- Modal Tambah Mapel -->
+    <div id="modalMapel" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>➕ Tambah Mata Pelajaran</h2>
-                <span class="close" onclick="closeTambahMapelModal()">&times;</span>
+                <h3 id="modalTitle">Tambah Mata Pelajaran</h3>
+                <span style="cursor: pointer; font-size: 20px;" onclick="tutupModal()">&times;</span>
             </div>
             <div class="form-group">
-                <label for="inputNamaMapel">Nama Mata Pelajaran:</label>
-                <input type="text" id="inputNamaMapel" placeholder="Masukkan nama mata pelajaran">
+                <label for="namaMapelBaru">Nama Mata Pelajaran</label>
+                <input type="text" id="namaMapelBaru" class="form-control">
             </div>
-            <button class="btn btn-success" onclick="tambahMataPelajaran()">💾 Simpan</button>
-            <button class="btn" onclick="closeTambahMapelModal()">❌ Batal</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="kkmMapelBaru">KKM</label>
+                    <input type="number" id="kkmMapelBaru" class="form-control" min="0" max="100" value="75">
+                </div>
+                <div class="form-group">
+                    <label for="nilaiPBaru">Nilai Pengetahuan</label>
+                    <input type="number" id="nilaiPBaru" class="form-control" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label for="nilaiKBaru">Nilai Keterampilan</label>
+                    <input type="number" id="nilaiKBaru" class="form-control" min="0" max="100">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" onclick="tutupModal()">Batal</button>
+                <button class="btn btn-success" onclick="simpanMapel()">Simpan</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Data global
-        let mataPelajaranData = [];
-        let ekstrakurikulerData = [];
-        let editingIndex = -1;
-        let namaWaliKelas = "Dewi Sartika, S.Pd.";
-        let namaKepalaSekolah = "Dr. Ahmad Fauzi, M.Pd.";
-
-        // Mata pelajaran default K13 SD
-        const defaultMapel = [
-            'Pendidikan Agama dan Budi Pekerti',
-            'Pendidikan Pancasila dan Kewarganegaraan', 
-            'Bahasa Indonesia',
-            'Matematika',
-            'Ilmu Pengetahuan Alam',
-            'Ilmu Pengetahuan Sosial',
-            'Seni Budaya dan Prakarya',
-            'Pendidikan Jasmani, Olahraga, dan Kesehatan'
+        // Data awal
+        let mataPelajaran = [
+            { nama: "Pendidikan Agama dan Budi Pekerti", kkm: 75, nilaiP: 85, nilaiK: 88 },
+            { nama: "Pendidikan Pancasila dan Kewarganegaraan", kkm: 75, nilaiP: 82, nilaiK: 85 },
+            { nama: "Bahasa Indonesia", kkm: 75, nilaiP: 80, nilaiK: 83 },
+            { nama: "Matematika", kkm: 70, nilaiP: 78, nilaiK: 82 },
+            { nama: "Ilmu Pengetahuan Alam", kkm: 75, nilaiP: 85, nilaiK: 87 },
+            { nama: "Ilmu Pengetahuan Sosial", kkm: 75, nilaiP: 83, nilaiK: 85 },
+            { nama: "Seni Budaya dan Prakarya", kkm: 70, nilaiP: 88, nilaiK: 90 },
+            { nama: "Pendidikan Jasmani, Olahraga, dan Kesehatan", kkm: 70, nilaiP: 87, nilaiK: 89 }
         ];
 
-        // Inisialisasi aplikasi
-        function initApp() {
-            console.log('Initializing app...');
+        let editingIndex = -1;
+
+        // Fungsi untuk toggle card
+        function toggleCard(header) {
+            const card = header.parentElement;
+            const body = card.querySelector('.card-body');
+            const icon = header.querySelector('.toggle-icon');
             
-            // Load mata pelajaran default
-            defaultMapel.forEach(nama => {
-                mataPelajaranData.push({
-                    nama: nama,
-                    nilaiP: Math.floor(Math.random() * 30) + 70, // Nilai random 70-100
-                    nilaiK: Math.floor(Math.random() * 30) + 70,
-                    deskripsiP: generateRandomDeskripsi(nama, 'pengetahuan'),
-                    deskripsiK: generateRandomDeskripsi(nama, 'keterampilan')
-                });
-            });
-            
-            // Load contoh ekstrakurikuler
-            ekstrakurikulerData = ['Pramuka', 'Seni Tari'];
-            
-            renderSubjectList();
-            renderEkstrakurikulerList();
-            
-            // Set tanggal
-            const today = new Date();
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('previewTempatTanggal').textContent = 
-                `Bandung, ${today.toLocaleDateString('id-ID', options)}`;
-            document.getElementById('previewNamaWaliKelas').textContent = namaWaliKelas;
-            document.getElementById('previewNamaKepalaSekolah').textContent = namaKepalaSekolah;
+            if (body.classList.contains('show')) {
+                body.classList.remove('show');
+                header.classList.add('collapsed');
+            } else {
+                body.classList.add('show');
+                header.classList.remove('collapsed');
+            }
         }
 
-        // Fungsi untuk membuat deskripsi acak
-        function generateRandomDeskripsi(mapel, jenis) {
-            const kataKerjaP = ['memahami', 'menguasai', 'mengetahui', 'mengenal', 'menjelaskan'];
-            const kataKerjaK = ['melakukan', 'mempraktikkan', 'menerapkan', 'menyajikan', 'membuat'];
-            const tingkat = ['sangat baik', 'baik', 'cukup baik', 'perlu bimbingan'];
-            
-            const kataKerja = jenis === 'pengetahuan' ? 
-                kataKerjaP[Math.floor(Math.random() * kataKerjaP.length)] : 
-                kataKerjaK[Math.floor(Math.random() * kataKerjaK.length)];
-            
-            const randomTingkat = tingkat[Math.floor(Math.random() * tingkat.length)];
-            
-            return `Siswa ${kataKerja} kompetensi ${mapel.toLowerCase()} dengan ${randomTingkat}.`;
+        // Fungsi untuk menghitung predikat
+        function hitungPredikat(nilai) {
+            if (nilai >= 90) return { predikat: "A", kelas: "predikat-A" };
+            if (nilai >= 80) return { predikat: "B", kelas: "predikat-B" };
+            if (nilai >= 70) return { predikat: "C", kelas: "predikat-C" };
+            return { predikat: "D", kelas: "predikat-D" };
         }
 
-        // Render daftar mata pelajaran
-        function renderSubjectList() {
-            console.log('Rendering subject list...');
-            const container = document.getElementById('subjectList');
-            container.innerHTML = '';
+        // Fungsi untuk cek tuntas
+        function cekTuntas(nilai, kkm) {
+            return nilai >= kkm ? "Tuntas" : "Belum Tuntas";
+        }
 
-            mataPelajaranData.forEach((mapel, index) => {
+        // Fungsi untuk memuat data legger
+        function muatLegger() {
+            const tbody = document.getElementById("leggerBody");
+            tbody.innerHTML = "";
+
+            let totalP = 0;
+            let totalK = 0;
+            let count = 0;
+
+            mataPelajaran.forEach((mapel, index) => {
                 const predikatP = hitungPredikat(mapel.nilaiP);
                 const predikatK = hitungPredikat(mapel.nilaiK);
+                const statusP = cekTuntas(mapel.nilaiP, mapel.kkm);
+                const statusK = cekTuntas(mapel.nilaiK, mapel.kkm);
 
-                const subjectDiv = document.createElement('div');
-                subjectDiv.className = 'subject-item';
-                subjectDiv.innerHTML = `
-                    <div class="subject-header">
-                        <span class="subject-name">${mapel.nama}</span>
-                        <div class="subject-actions">
-                            <button class="btn btn-small" onclick="editMataPelajaran(${index})">✏️ Edit</button>
-                            <button class="btn btn-danger btn-small" onclick="hapusMataPelajaran(${index})">🗑️ Hapus</button>
-                        </div>
-                    </div>
-                    
-                    <div class="nilai-inputs">
-                        <div class="nilai-group">
-                            <label>Nilai Pengetahuan (P):</label>
-                            <input type="number" min="0" max="100" value="${mapel.nilaiP}" 
-                                   onchange="updateNilai(${index}, 'nilaiP', this.value)" 
-                                   placeholder="0-100">
-                            <div class="predikat-display predikat-${predikatP}">
-                                ${predikatP ? `Predikat: ${predikatP}` : 'Belum ada nilai'}
-                            </div>
-                        </div>
-                        <div class="nilai-group">
-                            <label>Nilai Keterampilan (K):</label>
-                            <input type="number" min="0" max="100" value="${mapel.nilaiK}" 
-                                   onchange="updateNilai(${index}, 'nilaiK', this.value)" 
-                                   placeholder="0-100">
-                            <div class="predikat-display predikat-${predikatK}">
-                                ${predikatK ? `Predikat: ${predikatK}` : 'Belum ada nilai'}
-                            </div>
-                        </div>
-                    </div>
+                totalP += mapel.nilaiP;
+                totalK += mapel.nilaiK;
+                count++;
 
-                    <div class="deskripsi-section">
-                        <div class="form-group">
-                            <label>📝 Deskripsi Pencapaian Pengetahuan:</label>
-                            <textarea placeholder="Tuliskan pencapaian kompetensi pengetahuan siswa..." 
-                                      onchange="updateNilai(${index}, 'deskripsiP', this.value)">${mapel.deskripsiP}</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>🎯 Deskripsi Pencapaian Keterampilan:</label>
-                            <textarea placeholder="Tuliskan pencapaian kompetensi keterampilan siswa..." 
-                                      onchange="updateNilai(${index}, 'deskripsiK', this.value)">${mapel.deskripsiK}</textarea>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(subjectDiv);
-            });
-        }
-
-        // Render daftar ekstrakurikuler
-        function renderEkstrakurikulerList() {
-            const container = document.getElementById('ekstrakurikulerList');
-            container.innerHTML = '';
-
-            ekstrakurikulerData.forEach((ekstra, index) => {
-                const ekstraDiv = document.createElement('div');
-                ekstraDiv.className = 'ekstrakurikuler-item';
-                ekstraDiv.innerHTML = `
-                    <span>${ekstra}</span>
-                    <button class="btn btn-danger btn-small" onclick="hapusEkstrakurikuler(${index})">🗑️ Hapus</button>
-                `;
-                container.appendChild(ekstraDiv);
-            });
-        }
-
-        // Hitung predikat berdasarkan nilai
-        function hitungPredikat(nilai) {
-            const num = parseFloat(nilai);
-            if (isNaN(num) || num === '') return '';
-            if (num >= 90) return 'A';
-            if (num >= 80) return 'B'; 
-            if (num >= 70) return 'C';
-            return 'D';
-        }
-
-        // Update nilai mata pelajaran
-        function updateNilai(index, field, value) {
-            console.log(`Updating ${field} for subject ${index}: ${value}`);
-            mataPelajaranData[index][field] = value;
-            renderSubjectList();
-        }
-
-        // Show modal tambah mata pelajaran
-        function showTambahMapelModal() {
-            document.getElementById('inputNamaMapel').value = '';
-            editingIndex = -1;
-            document.getElementById('modalTambahMapel').classList.add('show');
-        }
-
-        // Close modal tambah mata pelajaran
-        function closeTambahMapelModal() {
-            document.getElementById('modalTambahMapel').classList.remove('show');
-        }
-
-        // Tambah mata pelajaran baru
-        function tambahMataPelajaran() {
-            const nama = document.getElementById('inputNamaMapel').value.trim();
-            
-            if (!nama) {
-                alert('Nama mata pelajaran harus diisi!');
-                return;
-            }
-
-            // Cek duplikasi
-            const isDuplicate = mataPelajaranData.some(mapel => 
-                mapel.nama.toLowerCase() === nama.toLowerCase()
-            );
-
-            if (isDuplicate) {
-                alert('Mata pelajaran dengan nama tersebut sudah ada!');
-                return;
-            }
-
-            if (editingIndex === -1) {
-                // Tambah baru
-                mataPelajaranData.push({
-                    nama: nama,
-                    nilaiP: '',
-                    nilaiK: '',
-                    deskripsiP: '',
-                    deskripsiK: ''
-                });
-            } else {
-                // Edit existing
-                mataPelajaranData[editingIndex].nama = nama;
-            }
-
-            renderSubjectList();
-            closeTambahMapelModal();
-        }
-
-        // Edit mata pelajaran
-        function editMataPelajaran(index) {
-            editingIndex = index;
-            document.getElementById('inputNamaMapel').value = mataPelajaranData[index].nama;
-            document.getElementById('modalTambahMapel').classList.add('show');
-        }
-
-        // Hapus mata pelajaran
-        function hapusMataPelajaran(index) {
-            if (confirm(`Yakin ingin menghapus mata pelajaran "${mataPelajaranData[index].nama}"?`)) {
-                mataPelajaranData.splice(index, 1);
-                renderSubjectList();
-            }
-        }
-
-        // Tambah ekstrakurikuler
-        function tambahEkstrakurikuler() {
-            const input = document.getElementById('inputEkstrakurikuler');
-            const nama = input.value.trim();
-            
-            if (!nama) {
-                alert('Nama ekstrakurikuler harus diisi!');
-                return;
-            }
-
-            if (ekstrakurikulerData.includes(nama)) {
-                alert('Ekstrakurikuler ini sudah ada!');
-                return;
-            }
-
-            ekstrakurikulerData.push(nama);
-            input.value = '';
-            renderEkstrakurikulerList();
-        }
-
-        // Hapus ekstrakurikuler
-        function hapusEkstrakurikuler(index) {
-            if (confirm(`Yakin ingin menghapus ekstrakurikuler "${ekstrakurikulerData[index]}"?`)) {
-                ekstrakurikulerData.splice(index, 1);
-                renderEkstrakurikulerList();
-            }
-        }
-
-        // Generate rapor
-        function generateRapor() {
-            console.log('Generating rapor...');
-
-            // Validasi data siswa
-            const namaSekolah = document.getElementById('namaSekolah').value.trim();
-            const namaSiswa = document.getElementById('namaSiswa').value.trim();
-            const nis = document.getElementById('nis').value.trim();
-            const nisn = document.getElementById('nisn').value.trim();
-            const kelas = document.getElementById('kelas').value;
-            const semester = document.getElementById('semester').value;
-            const tahunAjaran = document.getElementById('tahunAjaran').value.trim();
-
-            if (!namaSekolah || !namaSiswa || !nis || !nisn || !kelas || !semester || !tahunAjaran) {
-                alert('Semua data siswa harus diisi terlebih dahulu!');
-                return;
-            }
-
-            // Update preview data siswa
-            document.getElementById('previewSekolah').textContent = namaSekolah;
-            document.getElementById('previewNama').textContent = namaSiswa;
-            document.getElementById('previewNIS').textContent = nis;
-            document.getElementById('previewNISN').textContent = nisn;
-            document.getElementById('previewKelas').textContent = `${kelas} (${terbilangKelas(kelas)})`;
-            document.getElementById('previewSemester').textContent = semester;
-            document.getElementById('previewTahun').textContent = tahunAjaran;
-
-            // Update sikap
-            document.getElementById('previewSikapSpiritual').textContent = 
-                document.getElementById('sikapSpiritual').value || '-';
-            document.getElementById('previewSikapSosial').textContent = 
-                document.getElementById('sikapSosial').value || '-';
-
-            // Update catatan wali kelas
-            document.getElementById('previewCatatanWali').textContent = 
-                document.getElementById('catatanWali').value || '-';
-
-            // Generate tabel nilai
-            const tbody = document.getElementById('nilaiTableBody');
-            tbody.innerHTML = '';
-
-            mataPelajaranData.forEach((mapel, index) => {
-                const nilaiP = parseFloat(mapel.nilaiP) || 0;
-                const nilaiK = parseFloat(mapel.nilaiK) || 0;
-                const predikatP = hitungPredikat(nilaiP);
-                const predikatK = hitungPredikat(nilaiK);
-
-                const row = document.createElement('tr');
+                const row = document.createElement("tr");
                 row.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${mapel.nama}</td>
-                    <td><strong>${nilaiP > 0 ? nilaiP : '-'}</strong></td>
-                    <td>${predikatP ? `<span class="predikat-cell ${predikatP}">${predikatP}</span>` : '-'}</td>
-                    <td><strong>${nilaiK > 0 ? nilaiK : '-'}</strong></td>
-                    <td>${predikatK ? `<span class="predikat-cell ${predikatK}">${predikatK}</span>` : '-'}</td>
+                    <td style="text-align: left;">${mapel.nama}</td>
+                    <td>${mapel.kkm}</td>
+                    <td><input type="number" value="${mapel.nilaiP}" min="0" max="100" onchange="updateNilai(${index}, 'nilaiP', this.value)" style="width: 60px; text-align: center; padding: 5px;"></td>
+                    <td><span class="predikat ${predikatP.kelas}">${predikatP.predikat}</span></td>
+                    <td class="${statusP === 'Tuntas' ? 'tuntas' : 'tidak-tuntas'}">${statusP}</td>
+                    <td><input type="number" value="${mapel.nilaiK}" min="0" max="100" onchange="updateNilai(${index}, 'nilaiK', this.value)" style="width: 60px; text-align: center; padding: 5px;"></td>
+                    <td><span class="predikat ${predikatK.kelas}">${predikatK.predikat}</span></td>
+                    <td class="${statusK === 'Tuntas' ? 'tuntas' : 'tidak-tuntas'}">${statusK}</td>
+                    <td>
+                        <button class="btn btn-sm" onclick="editMapel(${index})" style="padding: 5px 8px;"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-danger btn-sm" onclick="hapusMapel(${index})" style="padding: 5px 8px;"><i class="fas fa-trash-alt"></i></button>
+                    </td>
                 `;
                 tbody.appendChild(row);
             });
 
-            // Generate deskripsi kompetensi
-            const deskripsiContainer = document.getElementById('deskripsiKompetensi');
-            deskripsiContainer.innerHTML = '<h3 style="color: #2d3748; margin-bottom: 20px;">📋 Deskripsi Capaian Kompetensi</h3>';
+            // Hitung rata-rata
+            const avgP = count > 0 ? (totalP / count).toFixed(2) : 0;
+            const avgK = count > 0 ? (totalK / count).toFixed(2) : 0;
 
-            mataPelajaranData.forEach((mapel, index) => {
-                if (mapel.deskripsiP || mapel.deskripsiK) {
-                    const deskripsiDiv = document.createElement('div');
-                    deskripsiDiv.className = 'deskripsi-item';
-                    deskripsiDiv.innerHTML = `
-                        <div class="deskripsi-title">${mapel.nama}</div>
-                        ${mapel.deskripsiP ? `<div class="deskripsi-text"><strong>Pengetahuan:</strong> ${mapel.deskripsiP}</div>` : ''}
-                        ${mapel.deskripsiK ? `<div class="deskripsi-text"><strong>Keterampilan:</strong> ${mapel.deskripsiK}</div>` : ''}
-                    `;
-                    deskripsiContainer.appendChild(deskripsiDiv);
-                }
-            });
+            document.getElementById("avgP").textContent = avgP;
+            document.getElementById("avgK").textContent = avgK;
+        }
 
-            // Generate ekstrakurikuler
-            const ekstraContainer = document.getElementById('previewEkstrakurikuler');
-            ekstraContainer.innerHTML = '';
+        // Fungsi untuk update nilai
+        function updateNilai(index, jenis, nilai) {
+            const num = parseInt(nilai);
+            if (isNaN(num)) return;
 
-            if (ekstrakurikulerData.length > 0) {
-                ekstrakurikulerData.forEach(ekstra => {
-                    const ekstraDiv = document.createElement('div');
-                    ekstraDiv.className = 'info-item';
-                    ekstraDiv.innerHTML = `
-                        <span class="info-label">${ekstra}</span>
-                        <span class="info-value">Sangat Baik</span>
-                    `;
-                    ekstraContainer.appendChild(ekstraDiv);
-                });
+            if (jenis === "nilaiP") {
+                mataPelajaran[index].nilaiP = num;
             } else {
-                ekstraContainer.innerHTML = '<div class="info-item"><span class="info-value">Tidak ada ekstrakurikuler</span></div>';
+                mataPelajaran[index].nilaiK = num;
             }
 
-            // Tampilkan preview rapor
-            document.getElementById('raporPreview').classList.add('show');
+            muatLegger();
         }
 
-        // Fungsi untuk mengubah angka kelas menjadi terbilang
-        function terbilangKelas(kelas) {
-            const terbilang = {
-                'I': 'Satu',
-                'II': 'Dua',
-                'III': 'Tiga',
-                'IV': 'Empat',
-                'V': 'Lima',
-                'VI': 'Enam'
-            };
-            return terbilang[kelas] || kelas;
+        // Fungsi untuk menambah mapel
+        function tambahMapel() {
+            editingIndex = -1;
+            document.getElementById("modalTitle").textContent = "Tambah Mata Pelajaran";
+            document.getElementById("namaMapelBaru").value = "";
+            document.getElementById("kkmMapelBaru").value = document.getElementById("kkmSekolah").value || 75;
+            document.getElementById("nilaiPBaru").value = "";
+            document.getElementById("nilaiKBaru").value = "";
+            document.getElementById("modalMapel").style.display = "flex";
         }
 
-        // Cetak rapor
-        function cetakRapor() {
-            // Pastikan rapor sudah di-generate
-            if (!document.getElementById('raporPreview').classList.contains('show')) {
-                alert('Silakan generate rapor terlebih dahulu sebelum mencetak!');
+        // Fungsi untuk edit mapel
+        function editMapel(index) {
+            editingIndex = index;
+            const mapel = mataPelajaran[index];
+            document.getElementById("modalTitle").textContent = "Edit Mata Pelajaran";
+            document.getElementById("namaMapelBaru").value = mapel.nama;
+            document.getElementById("kkmMapelBaru").value = mapel.kkm;
+            document.getElementById("nilaiPBaru").value = mapel.nilaiP;
+            document.getElementById("nilaiKBaru").value = mapel.nilaiK;
+            document.getElementById("modalMapel").style.display = "flex";
+        }
+
+        // Fungsi untuk simpan mapel
+        function simpanMapel() {
+            const nama = document.getElementById("namaMapelBaru").value.trim();
+            const kkm = parseInt(document.getElementById("kkmMapelBaru").value) || 75;
+            const nilaiP = parseInt(document.getElementById("nilaiPBaru").value) || 0;
+            const nilaiK = parseInt(document.getElementById("nilaiKBaru").value) || 0;
+
+            if (!nama) {
+                alert("Nama mata pelajaran harus diisi!");
                 return;
             }
+
+            if (editingIndex === -1) {
+                mataPelajaran.push({ nama, kkm, nilaiP, nilaiK });
+            } else {
+                mataPelajaran[editingIndex] = { nama, kkm, nilaiP, nilaiK };
+            }
+
+            tutupModal();
+            muatLegger();
+        }
+
+        // Fungsi untuk hapus mapel
+        function hapusMapel(index) {
+            if (confirm(`Yakin ingin menghapus mata pelajaran "${mataPelajaran[index].nama}"?`)) {
+                mataPelajaran.splice(index, 1);
+                muatLegger();
+            }
+        }
+
+        // Fungsi untuk tutup modal
+        function tutupModal() {
+            document.getElementById("modalMapel").style.display = "none";
+        }
+
+        // Fungsi untuk generate rapor
+        function generateRapor() {
+            // Validasi data
+            if (!document.getElementById("namaSiswa").value || 
+                !document.getElementById("nis").value || 
+                !document.getElementById("kelas").value) {
+                alert("Data siswa belum lengkap!");
+                return;
+            }
+
+            // Update data sekolah
+            document.getElementById("previewNamaSekolah").textContent = document.getElementById("namaSekolah").value.toUpperCase();
+            document.getElementById("previewSekolahLengkap").textContent = document.getElementById("namaSekolah").value;
             
+            // Update data siswa
+            document.getElementById("previewNamaSiswa").textContent = document.getElementById("namaSiswa").value;
+            document.getElementById("previewNIS").textContent = document.getElementById("nis").value + " / " + document.getElementById("nisn").value;
+            document.getElementById("previewKelas").textContent = "Kelas " + document.getElementById("kelas").value + 
+                (document.getElementById("kelas").value === "I" ? " (Satu)" : 
+                 document.getElementById("kelas").value === "II" ? " (Dua)" : 
+                 document.getElementById("kelas").value === "III" ? " (Tiga)" : 
+                 document.getElementById("kelas").value === "IV" ? " (Empat)" : 
+                 document.getElementById("kelas").value === "V" ? " (Lima)" : " (Enam)");
+            document.getElementById("previewSemester").textContent = document.getElementById("semester").value === "1" ? "1 (Ganjil)" : "2 (Genap)";
+            document.getElementById("previewTahunAjaran").textContent = document.getElementById("tahunAjaran").value;
+            
+            // Update wali kelas dan kepala sekolah
+            document.getElementById("previewNamaWaliKelas").textContent = document.getElementById("namaWaliKelas").value;
+            document.getElementById("previewNamaKepalaSekolah").textContent = document.getElementById("namaKepalaSekolah").value;
+            
+            // Update tanggal
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById("previewTempatTanggal").textContent = 
+                "Bandung, " + today.toLocaleDateString('id-ID', options);
+            
+            // Update sikap
+            document.getElementById("previewSikapSpiritual").textContent = document.getElementById("sikapSpiritual").value;
+            document.getElementById("previewSikapSosial").textContent = document.getElementById("sikapSosial").value;
+            
+            // Update nilai
+            const tbody = document.getElementById("previewNilai");
+            tbody.innerHTML = "";
+            
+            let totalP = 0;
+            let totalK = 0;
+            let count = 0;
+            
+            mataPelajaran.forEach((mapel, index) => {
+                const predikatP = hitungPredikat(mapel.nilaiP);
+                const predikatK = hitungPredikat(mapel.nilaiK);
+                const statusP = cekTuntas(mapel.nilaiP, mapel.kkm);
+                const statusK = cekTuntas(mapel.nilaiK, mapel.kkm);
+                
+                totalP += mapel.nilaiP;
+                totalK += mapel.nilaiK;
+                count++;
+                
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td style="text-align: left;">${mapel.nama}</td>
+                    <td>${mapel.kkm}</td>
+                    <td>${mapel.nilaiP}</td>
+                    <td><span class="predikat ${predikatP.kelas}">${predikatP.predikat}</span></td>
+                    <td class="${statusP === 'Tuntas' ? 'tuntas' : 'tidak-tuntas'}">${statusP}</td>
+                    <td>${mapel.nilaiK}</td>
+                    <td><span class="predikat ${predikatK.kelas}">${predikatK.predikat}</span></td>
+                    <td class="${statusK === 'Tuntas' ? 'tuntas' : 'tidak-tuntas'}">${statusK}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Update rata-rata
+            const avgP = count > 0 ? (totalP / count).toFixed(2) : 0;
+            const avgK = count > 0 ? (totalK / count).toFixed(2) : 0;
+            
+            document.getElementById("previewAvgP").textContent = avgP;
+            document.getElementById("previewAvgK").textContent = avgK;
+            
+            // Update ekstrakurikuler
+            document.getElementById("previewEkstra1").textContent = document.getElementById("ekstra1").value;
+            document.getElementById("previewNilaiEkstra1").textContent = document.getElementById("nilaiEkstra1").value;
+            document.getElementById("previewEkstra2").textContent = document.getElementById("ekstra2").value;
+            document.getElementById("previewNilaiEkstra2").textContent = document.getElementById("nilaiEkstra2").value;
+            
+            // Update catatan
+            document.getElementById("previewCatatanWali").textContent = document.getElementById("catatanWali").value;
+            document.getElementById("previewSaran").textContent = "Saran: " + (document.getElementById("saran").value || "-");
+            
+            // Tampilkan preview
+            document.getElementById("raporPreview").style.display = "block";
+            document.getElementById("raporPreview").scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fungsi untuk cetak rapor
+        function cetakRapor() {
+            if (document.getElementById("raporPreview").style.display !== "block") {
+                alert("Silakan generate rapor terlebih dahulu!");
+                return;
+            }
             window.print();
         }
 
-        // Reset semua data
-        function resetData() {
-            if (confirm('Yakin ingin mereset semua data? Semua input akan dikembalikan ke nilai default.')) {
-                // Reset data siswa
-                document.getElementById('namaSekolah').value = 'SDN 01 Contoh';
-                document.getElementById('namaSiswa').value = 'Ananda Putri';
-                document.getElementById('nis').value = '12345';
-                document.getElementById('nisn').value = '9876543210';
-                document.getElementById('kelas').value = 'V';
-                document.getElementById('semester').value = 'Genap';
-                document.getElementById('tahunAjaran').value = '2024/2025';
-                
-                // Reset sikap
-                document.getElementById('sikapSpiritual').value = 'Ananda menunjukkan sikap spiritual yang baik, selalu berdoa sebelum dan sesudah kegiatan pembelajaran.';
-                document.getElementById('sikapSosial').value = 'Ananda memiliki sikap sosial yang baik, mampu bekerja sama dengan teman dan menghargai perbedaan pendapat.';
-                
-                // Reset catatan wali
-                document.getElementById('catatanWali').value = 'Ananda adalah siswa yang rajin dan disiplin. Terus pertahankan prestasinya dan tingkatkan kemampuan dalam bekerja sama dengan teman sekelas.';
-                
-                // Reset mata pelajaran
-                mataPelajaranData = [];
-                defaultMapel.forEach(nama => {
-                    mataPelajaranData.push({
-                        nama: nama,
-                        nilaiP: Math.floor(Math.random() * 30) + 70,
-                        nilaiK: Math.floor(Math.random() * 30) + 70,
-                        deskripsiP: generateRandomDeskripsi(nama, 'pengetahuan'),
-                        deskripsiK: generateRandomDeskripsi(nama, 'keterampilan')
-                    });
-                });
-                renderSubjectList();
-                
-                // Reset ekstrakurikuler
-                ekstrakurikulerData = ['Pramuka', 'Seni Tari'];
-                renderEkstrakurikulerList();
-                
-                // Sembunyikan preview
-                document.getElementById('raporPreview').classList.remove('show');
-                
-                alert('Data telah direset ke nilai default!');
-            }
-        }
-
-        // Simpan data ke localStorage
+        // Fungsi untuk simpan data ke localStorage
         function simpanData() {
             const data = {
+                sekolah: {
+                    nama: document.getElementById("namaSekolah").value,
+                    npsn: document.getElementById("npsn").value,
+                    alamat: document.getElementById("alamatSekolah").value,
+                    kepalaSekolah: document.getElementById("namaKepalaSekolah").value,
+                    nipKepalaSekolah: document.getElementById("nipKepalaSekolah").value,
+                    kkm: document.getElementById("kkmSekolah").value
+                },
                 siswa: {
-                    namaSekolah: document.getElementById('namaSekolah').value,
-                    namaSiswa: document.getElementById('namaSiswa').value,
-                    nis: document.getElementById('nis').value,
-                    nisn: document.getElementById('nisn').value,
-                    kelas: document.getElementById('kelas').value,
-                    semester: document.getElementById('semester').value,
-                    tahunAjaran: document.getElementById('tahunAjaran').value
+                    nama: document.getElementById("namaSiswa").value,
+                    nis: document.getElementById("nis").value,
+                    nisn: document.getElementById("nisn").value,
+                    kelas: document.getElementById("kelas").value,
+                    semester: document.getElementById("semester").value,
+                    tahunAjaran: document.getElementById("tahunAjaran").value,
+                    waliKelas: document.getElementById("namaWaliKelas").value,
+                    nipWaliKelas: document.getElementById("nipWaliKelas").value
                 },
                 sikap: {
-                    spiritual: document.getElementById('sikapSpiritual').value,
-                    sosial: document.getElementById('sikapSosial').value
+                    spiritual: document.getElementById("sikapSpiritual").value,
+                    sosial: document.getElementById("sikapSosial").value
                 },
-                catatanWali: document.getElementById('catatanWali').value,
-                mataPelajaran: mataPelajaranData,
-                ekstrakurikuler: ekstrakurikulerData,
-                namaWaliKelas: namaWaliKelas,
-                namaKepalaSekolah: namaKepalaSekolah
+                ekstrakurikuler: {
+                    ekstra1: document.getElementById("ekstra1").value,
+                    nilaiEkstra1: document.getElementById("nilaiEkstra1").value,
+                    ekstra2: document.getElementById("ekstra2").value,
+                    nilaiEkstra2: document.getElementById("nilaiEkstra2").value
+                },
+                catatan: {
+                    wali: document.getElementById("catatanWali").value,
+                    saran: document.getElementById("saran").value
+                },
+                mataPelajaran: mataPelajaran
             };
             
-            localStorage.setItem('raporK13Data', JSON.stringify(data));
-            alert('Data berhasil disimpan!');
+            localStorage.setItem("raporK13Data", JSON.stringify(data));
+            alert("Data berhasil disimpan!");
         }
 
-        // Muat data dari localStorage
-        function loadData() {
-            const savedData = localStorage.getItem('raporK13Data');
-            if (!savedData) {
-                alert('Tidak ada data yang tersimpan!');
+        // Fungsi untuk muat data dari localStorage
+        function muatData() {
+            const data = JSON.parse(localStorage.getItem("raporK13Data"));
+            if (!data) {
+                alert("Tidak ada data yang tersimpan!");
                 return;
             }
             
-            const data = JSON.parse(savedData);
+            // Muat data sekolah
+            document.getElementById("namaSekolah").value = data.sekolah.nama || "";
+            document.getElementById("npsn").value = data.sekolah.npsn || "";
+            document.getElementById("alamatSekolah").value = data.sekolah.alamat || "";
+            document.getElementById("namaKepalaSekolah").value = data.sekolah.kepalaSekolah || "";
+            document.getElementById("nipKepalaSekolah").value = data.sekolah.nipKepalaSekolah || "";
+            document.getElementById("kkmSekolah").value = data.sekolah.kkm || 75;
             
-            // Load data siswa
-            document.getElementById('namaSekolah').value = data.siswa.namaSekolah || '';
-            document.getElementById('namaSiswa').value = data.siswa.namaSiswa || '';
-            document.getElementById('nis').value = data.siswa.nis || '';
-            document.getElementById('nisn').value = data.siswa.nisn || '';
-            document.getElementById('kelas').value = data.siswa.kelas || '';
-            document.getElementById('semester').value = data.siswa.semester || '';
-            document.getElementById('tahunAjaran').value = data.siswa.tahunAjaran || '';
+            // Muat data siswa
+            document.getElementById("namaSiswa").value = data.siswa.nama || "";
+            document.getElementById("nis").value = data.siswa.nis || "";
+            document.getElementById("nisn").value = data.siswa.nisn || "";
+            document.getElementById("kelas").value = data.siswa.kelas || "";
+            document.getElementById("semester").value = data.siswa.semester || "";
+            document.getElementById("tahunAjaran").value = data.siswa.tahunAjaran || "";
+            document.getElementById("namaWaliKelas").value = data.siswa.waliKelas || "";
+            document.getElementById("nipWaliKelas").value = data.siswa.nipWaliKelas || "";
             
-            // Load sikap
-            document.getElementById('sikapSpiritual').value = data.sikap.spiritual || '';
-            document.getElementById('sikapSosial').value = data.sikap.sosial || '';
+            // Muat sikap
+            document.getElementById("sikapSpiritual").value = data.sikap.spiritual || "";
+            document.getElementById("sikapSosial").value = data.sikap.sosial || "";
             
-            // Load catatan wali
-            document.getElementById('catatanWali').value = data.catatanWali || '';
+            // Muat ekstrakurikuler
+            document.getElementById("ekstra1").value = data.ekstrakurikuler.ekstra1 || "";
+            document.getElementById("nilaiEkstra1").value = data.ekstrakurikuler.nilaiEkstra1 || "";
+            document.getElementById("ekstra2").value = data.ekstrakurikuler.ekstra2 || "";
+            document.getElementById("nilaiEkstra2").value = data.ekstrakurikuler.nilaiEkstra2 || "";
             
-            // Load mata pelajaran
-            mataPelajaranData = data.mataPelajaran || [];
-            renderSubjectList();
+            // Muat catatan
+            document.getElementById("catatanWali").value = data.catatan.wali || "";
+            document.getElementById("saran").value = data.catatan.saran || "";
             
-            // Load ekstrakurikuler
-            ekstrakurikulerData = data.ekstrakurikuler || [];
-            renderEkstrakurikulerList();
+            // Muat mata pelajaran
+            mataPelajaran = data.mataPelajaran || [];
             
-            // Load nama guru
-            namaWaliKelas = data.namaWaliKelas || 'Dewi Sartika, S.Pd.';
-            namaKepalaSekolah = data.namaKepalaSekolah || 'Dr. Ahmad Fauzi, M.Pd.';
-            
-            alert('Data berhasil dimuat!');
+            muatLegger();
+            alert("Data berhasil dimuat!");
         }
 
-        // Inisialisasi aplikasi saat halaman dimuat
-        window.onload = initApp;
+        // Fungsi untuk reset data
+        function resetData() {
+            if (confirm("Apakah Anda yakin ingin mereset semua data ke nilai default?")) {
+                // Reset data sekolah
+                document.getElementById("namaSekolah").value = "SDN 01 Contoh";
+                document.getElementById("npsn").value = "12345678";
+                document.getElementById("alamatSekolah").value = "Jl. Pendidikan No. 1, Kota Contoh";
+                document.getElementById("namaKepalaSekolah").value = "Dr. Ahmad Fauzi, M.Pd.";
+                document.getElementById("nipKepalaSekolah").value = "19651231 199203 1 001";
+                document.getElementById("kkmSekolah").value = 75;
+                
+                // Reset data siswa
+                document.getElementById("namaSiswa").value = "Ananda Putri";
+                document.getElementById("nis").value = "12345";
+                document.getElementById("nisn").value = "9876543210";
+                document.getElementById("kelas").value = "V";
+                document.getElementById("semester").value = "2";
+                document.getElementById("tahunAjaran").value = "2024/2025";
+                document.getElementById("namaWaliKelas").value = "Dewi Sartika, S.Pd.";
+                document.getElementById("nipWaliKelas").value = "19800312 200501 2 002";
+                
+                // Reset sikap
+                document.getElementById("sikapSpiritual").value = "Ananda menunjukkan sikap spiritual yang baik, selalu berdoa sebelum dan sesudah kegiatan pembelajaran.";
+                document.getElementById("sikapSosial").value = "Ananda memiliki sikap sosial yang baik, mampu bekerja sama dengan teman dan menghargai perbedaan pendapat.";
+                
+                // Reset ekstrakurikuler
+                document.getElementById("ekstra1").value = "Pramuka";
+                document.getElementById("nilaiEkstra1").value = "Baik";
+                document.getElementById("ekstra2").value = "Seni Tari";
+                document.getElementById("nilaiEkstra2").value = "Sangat Baik";
+                
+                // Reset catatan
+                document.getElementById("catatanWali").value = "Ananda adalah siswa yang rajin dan disiplin. Terus pertahankan prestasinya dan tingkatkan kemampuan dalam bekerja sama dengan teman sekelas.";
+                document.getElementById("saran").value = "Ditingkatkan lagi kedisiplinan dalam mengumpulkan tugas tepat waktu.";
+                
+                // Reset mata pelajaran
+                mataPelajaran = [
+                    { nama: "Pendidikan Agama dan Budi Pekerti", kkm: 75, nilaiP: 85, nilaiK: 88 },
+                    { nama: "Pendidikan Pancasila dan Kewarganegaraan", kkm: 75, nilaiP: 82, nilaiK: 85 },
+                    { nama: "Bahasa Indonesia", kkm: 75, nilaiP: 80, nilaiK: 83 },
+                    { nama: "Matematika", kkm: 70, nilaiP: 78, nilaiK: 82 },
+                    { nama: "Ilmu Pengetahuan Alam", kkm: 75, nilaiP: 85, nilaiK: 87 },
+                    { nama: "Ilmu Pengetahuan Sosial", kkm: 75, nilaiP: 83, nilaiK: 85 },
+                    { nama: "Seni Budaya dan Prakarya", kkm: 70, nilaiP: 88, nilaiK: 90 },
+                    { nama: "Pendidikan Jasmani, Olahraga, dan Kesehatan", kkm: 70, nilaiP: 87, nilaiK: 89 }
+                ];
+                
+                muatLegger();
+                document.getElementById("raporPreview").style.display = "none";
+            }
+        }
+
+        // Inisialisasi saat halaman dimuat
+        window.onload = function() {
+            muatLegger();
+            
+            // Buka card legger secara default
+            document.querySelector('.card-header').click();
+            
+            // Cek apakah ada data tersimpan
+            if (localStorage.getItem("raporK13Data")) {
+                if (confirm("Ada data tersimpan. Mau dimuat sekarang?")) {
+                    muatData();
+                }
+            }
+        };
     </script>
 </body>
 </html>
